@@ -5,3 +5,11 @@ export class WorldGrid {
     }
 }
 
+export class Robot {
+    constructor(public x: number, public y: number, public orientation: string) {
+        this.x = x
+        this.y = y
+        this.orientation = orientation
+    }
+}
+
