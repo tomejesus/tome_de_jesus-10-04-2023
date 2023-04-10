@@ -94,6 +94,13 @@ export class Robot {
 }
 
 export class MarsMissionSimulator {
+    robots: Robot[]
+    worldGrid?: WorldGrid
+
+    constructor() {
+        this.robots = []
+    }
+
     run(robot: Robot, commands: string) {
         for (let i = 0; i < commands.length; i++) {
             const command = commands[i]
@@ -117,5 +124,15 @@ export class MarsMissionSimulator {
         const state = robot.isLost ? ' LOST' : ''
         return `{(${robot.x}, ${robot.y}, ${robot.orientation})${state}}`
     }
-}
 
+    createWorldGrid(x: number, y: number) {
+        this.worldGrid = new WorldGrid(x, y)
+    }
+
+    createRobot(x: number, y: number, orientation: string) {
+        if (this.worldGrid) {
+            const robot = new Robot(x, y, orientation, this.worldGrid)
+            this.robots.push(robot)
+        }
+    }
+}

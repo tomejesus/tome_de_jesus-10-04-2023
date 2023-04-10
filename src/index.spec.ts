@@ -56,30 +56,50 @@ describe('Robot', () => {
     expect(robot.orientation).toBe('E')
     expect(robot.isLost).toBe(true)
   })
+})
 
-  describe('MarsMissionSimulator', () => {
-    const worldGrid = new WorldGrid(5, 3)
-    const robotSimulator = new MarsMissionSimulator()
+describe('MarsMissionSimulator', () => {
+  const worldGrid = new WorldGrid(5, 3)
 
-    test('MarsMissionSimulator can take a string of instructions and execute them on a robot.', () => {
-      const robot = new Robot(1, 1, 'E', worldGrid)
-      robotSimulator.run(robot, 'RFRFRFRF')
-      expect(robot.x).toBe(1)
-      expect(robot.y).toBe(1)
-      expect(robot.orientation).toBe('E')
-    })
+  test('MarsMissionSimulator can take a string of instructions and execute them on a robot.', () => {
+    const missionSimulator = new MarsMissionSimulator()
+    const robot = new Robot(1, 1, 'E', worldGrid)
+    missionSimulator.run(robot, 'RFRFRFRF')
+    expect(robot.x).toBe(1)
+    expect(robot.y).toBe(1)
+    expect(robot.orientation).toBe('E')
+  })
 
-    test('MarsMissionSimulator can provide a robots status.', () => {
-      const robot = new Robot(1, 1, 'E', worldGrid)
-      const status = robotSimulator.provideRobotStatusReport(robot)
-      expect(status).toBe('{(1, 1, E)}')
-    })
+  test('MarsMissionSimulator can provide a robots status.', () => {
+    const missionSimulator = new MarsMissionSimulator()
+    const robot = new Robot(1, 1, 'E', worldGrid)
+    const status = missionSimulator.provideRobotStatusReport(robot)
+    expect(status).toBe('{(1, 1, E)}')
+  })
 
-    test('MarsMissionSimulator can provide a robots status if it is lost.', () => {
-      const robot = new Robot(3, 2, 'N', worldGrid)
-      robotSimulator.run(robot, 'FRRFLLFFRRFLL')
-      const status = robotSimulator.provideRobotStatusReport(robot)
-      expect(status).toBe('{(3, 3, N) LOST}')
-    })
+  test('MarsMissionSimulator can provide a robots status if it is lost.', () => {
+    const missionSimulator = new MarsMissionSimulator()
+    const robot = new Robot(3, 2, 'N', worldGrid)
+    missionSimulator.run(robot, 'FRRFLLFFRRFLL')
+    const status = missionSimulator.provideRobotStatusReport(robot)
+    expect(status).toBe('{(3, 3, N) LOST}')
+  })
+
+  test('MarsMissionSimulator can  and store a world grid.', () => {
+    const missionSimulator = new MarsMissionSimulator()
+    missionSimulator.createWorldGrid(5, 3)
+    expect(missionSimulator.worldGrid).toBeInstanceOf(WorldGrid)
+    expect(missionSimulator.worldGrid?.m).toBe(5)
+    expect(missionSimulator.worldGrid?.n).toBe(3)
+  })
+
+  test('MarsMissionSimulator can create and store robot.', () => {
+    const missionSimulator = new MarsMissionSimulator()
+    missionSimulator.createWorldGrid(5, 3)
+    missionSimulator.createRobot(1, 1, 'E')
+    expect(missionSimulator.robots[0]).toBeInstanceOf(Robot)
+    expect(missionSimulator.robots[0].x).toBe(1)
+    expect(missionSimulator.robots[0].y).toBe(1)
+    expect(missionSimulator.robots[0].orientation).toBe('E')
   })
 })
