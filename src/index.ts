@@ -6,25 +6,47 @@ export class WorldGrid {
 }
 
 export class Robot {
+    isLost: boolean
     constructor(public x: number, public y: number, public orientation: string, public worldGrid: WorldGrid) {
         this.x = x
         this.y = y
         this.orientation = orientation
         this.worldGrid = worldGrid
+        this.isLost = false
     }
 
     moveForward() { 
+        if (this.isLost) {
+            return
+        }
+
         switch (this.orientation) {
             case 'N':
+                if (this.y + 1 > this.worldGrid.n) {
+                    this.isLost = true
+                    return
+                }
                 this.y++
                 break
             case 'E':
+                if (this.x + 1 > this.worldGrid.m) {
+                    this.isLost = true
+                    return
+                }
                 this.x++
                 break
             case 'S':
+                if (this.y - 1 < 0) {
+                    this.isLost = true
+                    return
+                }
                 this.y--
                 break
             case 'W':
+                if (this.x - 1 < 0) {
+                    this.isLost = true
+                    return
+                }
                 this.x--
                 break
             default:

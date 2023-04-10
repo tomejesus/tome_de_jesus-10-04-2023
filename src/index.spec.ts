@@ -49,4 +49,17 @@ describe('Robot', () => {
     expect(robot.y).toBe(1)
     expect(robot.orientation).toBe('S')
   })
+
+  test('If a robot moves off the grid, it is marked as ‘lost’ and its last valid grid position and orientation is recorded.', () => {
+    const robot = new Robot(1, 1, 'E', worldGridMock)
+    robot.moveForward()
+    robot.moveForward()
+    robot.moveForward()
+    robot.moveForward()
+    robot.moveForward()
+    expect(robot.x).toBe(5)
+    expect(robot.y).toBe(1)
+    expect(robot.orientation).toBe('E')
+    expect(robot.isLost).toBe(true)
+  })
 })
