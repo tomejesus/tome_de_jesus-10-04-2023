@@ -1,3 +1,5 @@
+import readline from 'readline'
+
 export class WorldGrid {
     constructor(public m: number, public n: number) {
         this.m = m
@@ -83,7 +85,7 @@ export class Robot {
         if (this.isLost) {
             return
         }
-        
+
         switch (this.orientation) {
             case 'N':
                 this.orientation = 'E'
@@ -158,3 +160,38 @@ export class MarsMissionSimulator {
         })
     }
 }
+
+const marsMissionSimulator = new MarsMissionSimulator()
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false
+})
+
+let lineCount = 0
+let worldGridDimensions: string[] = []
+let robotInput: string[] = []
+let robotString: string = ''
+
+rl.question('Enter the world dimensions then enter robot inputs: ', (response) => {
+    worldGridDimensions = response.split(' ')
+    marsMissionSimulator.createWorldGrid(parseInt(worldGridDimensions[0]), parseInt(worldGridDimensions[1]))
+
+    rl.on('line', (line) => {
+        if (line.toLowerCase() === 'end' || line === '') {
+            rl.close()
+            return
+        }
+
+        robotString = line.replace('(', '').replace(')', ',')
+        robotInput = robotString.split(',')
+        marsMissionSimulator.createRobot(parseInt(robotInput[0]), parseInt(robotInput[1]), robotInput[2].trim(), robotInput[3].trim())
+    
+        lineCount++
+    }) 
+})
+
+rl.on('close', () => {
+    marsMissionSimulator.runSimulation()
+})
