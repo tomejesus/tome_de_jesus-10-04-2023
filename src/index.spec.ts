@@ -24,4 +24,12 @@ describe('Robot', () => {
     expect(robot.y).toBe(1)
     expect(robot.orientation).toBe('E')
   })
+
+  test('Robot can move forward one space (F).', () => {
+    const robot = new Robot(1, 1, 'E')
+    robot.moveForward()
+    expect(robot.x).toBe(2)
+    expect(robot.y).toBe(1)
+    expect(robot.orientation).toBe('E')
+  })
 })

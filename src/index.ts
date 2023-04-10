@@ -11,5 +11,24 @@ export class Robot {
         this.y = y
         this.orientation = orientation
     }
+
+    moveForward() { 
+        switch (this.orientation) {
+            case 'N':
+                this.y++
+                break
+            case 'E':
+                this.x++
+                break
+            case 'S':
+                this.y--
+                break
+            case 'W':
+                this.x--
+                break
+            default:
+                break
+        }
+    }
 }
 
