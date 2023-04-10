@@ -68,5 +68,11 @@ describe('Robot', () => {
       expect(robot.y).toBe(1)
       expect(robot.orientation).toBe('E')
     })
+
+    test('MarsMissionSimulator can provide a robots status.', () => {
+      const robot = new Robot(1, 1, 'E', worldGrid)
+      const status = robotSimulator.provideRobotStatusReport(robot)
+      expect(status).toBe('{(1, 1, E)}')
+    })
   })
 })

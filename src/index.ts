@@ -112,5 +112,10 @@ export class MarsMissionSimulator {
             }
         }
     }
+
+    provideRobotStatusReport(robot: Robot) {
+        const state = robot.isLost ? ' LOST' : ''
+        return `{(${robot.x}, ${robot.y}, ${robot.orientation})${state}}`
+    }
 }
 
