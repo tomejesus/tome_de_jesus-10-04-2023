@@ -10,7 +10,7 @@
 - (0, 0) represents the south-west corner of the grid.
 
 ### Technology
-- TypeScript v4
+- TypeScript Node.js
 - Testing with Jest
 - Linting with Eslint and Prettier
 
@@ -19,13 +19,14 @@
 #### `yarn start`
 
 - Starts the app
-- Respond to the prompt for world grid dimension input which need to be provided in a `x-axis y-axis` format, e.g. `4 8`
-- Respond to the prompts for robot inputs which need to be provided in a `(x-start, y-start, orientation-start) {COMMANDS}` format with `{COMMANDS}` being a series of the following commands:
-  - `F`: move forward one space
-  - `L`: rotate left by 90 degrees
-  - `R`: rotate right by 90 degrees
-- Close the app and the outputs for each robot created will be printed out
+- Respond to the prompt: 
+  - Enter a world grid dimension input which needs to be provided in a `x-axis y-axis` format, e.g. `4 8`
+  - Enter robot inputs which need to be provided in a `(x-start, y-start, orientation-start) {COMMANDS}` format with `{COMMANDS}` being a series of the following commands:
+    - `F`: move forward one space
+    - `L`: rotate left by 90 degrees
+    - `R`: rotate right by 90 degrees
+- Close the app by entering an empty line and the outputs for each robot created will be printed out in a `{(x-position, y-position, orientation) status?}`, e.g. `{(1, 0, S) LOST}` or `{(5, 2, W)}`
 
 #### `yarn test`
 
-Will run the tests.
+- Will run the tests.
