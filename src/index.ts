@@ -57,6 +57,10 @@ export class Robot {
     }
 
     rotateLeft() {
+        if (this.isLost) {
+            return
+        }
+
         switch (this.orientation) {
             case 'N':
                 this.orientation = 'W'
@@ -76,6 +80,10 @@ export class Robot {
     }
 
     rotateRight() {
+        if (this.isLost) {
+            return
+        }
+        
         switch (this.orientation) {
             case 'N':
                 this.orientation = 'E'
@@ -98,14 +106,15 @@ export class Robot {
 export class MarsMissionSimulator {
     robots: Robot[]
     worldGrid?: WorldGrid
+    statusReports: string[] = []
 
     constructor() {
         this.robots = []
     }
 
-    processRobot(robot: Robot, commands: string) {
-        for (let i = 0; i < commands.length; i++) {
-            const command = commands[i]
+    processRobot(robot: Robot) {
+        for (let i = 0; i < robot.commands.length; i++) {
+            const command = robot.commands[i]
             switch (command) {
                 case 'F':
                     robot.moveForward()
@@ -122,9 +131,9 @@ export class MarsMissionSimulator {
         }
     }
 
-    provideRobotStatusReport(robot: Robot) {
+    generateRobotStatusReport(robot: Robot) {
         const state = robot.isLost ? ' LOST' : ''
-        return `{(${robot.x}, ${robot.y}, ${robot.orientation})${state}}`
+        this.statusReports.push(`(${robot.x}, ${robot.y}, ${robot.orientation})${state}`)
     }
 
     createWorldGrid(x: number, y: number) {
@@ -138,10 +147,14 @@ export class MarsMissionSimulator {
         }
     }
 
-    run() {
+    runSimulation() {
         this.robots.forEach((robot) => {
-            this.processRobot(robot, 'FFRFF')
-            console.log(this.provideRobotStatusReport(robot))
+            this.processRobot(robot)
+            this.generateRobotStatusReport(robot)
+        })
+
+        this.statusReports.forEach((statusReport) => {
+            console.log(statusReport)
         })
     }
 }
