@@ -32,4 +32,12 @@ describe('Robot', () => {
     expect(robot.y).toBe(1)
     expect(robot.orientation).toBe('E')
   })
+
+  test('Robot can rotate left by 90 degrees (L).', () => {
+    const robot = new Robot(1, 1, 'E')
+    robot.rotateLeft()
+    expect(robot.x).toBe(1)
+    expect(robot.y).toBe(1)
+    expect(robot.orientation).toBe('N')
+  })
 })
