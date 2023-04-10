@@ -6,10 +6,11 @@ export class WorldGrid {
 }
 
 export class Robot {
-    constructor(public x: number, public y: number, public orientation: string) {
+    constructor(public x: number, public y: number, public orientation: string, public worldGrid: WorldGrid) {
         this.x = x
         this.y = y
         this.orientation = orientation
+        this.worldGrid = worldGrid
     }
 
     moveForward() { 
@@ -44,6 +45,25 @@ export class Robot {
                 break
             case 'W':
                 this.orientation = 'S'
+                break
+            default:
+                break
+        }
+    }
+
+    rotateRight() {
+        switch (this.orientation) {
+            case 'N':
+                this.orientation = 'E'
+                break
+            case 'E':
+                this.orientation = 'S'
+                break
+            case 'S':
+                this.orientation = 'W'
+                break
+            case 'W':
+                this.orientation = 'N'
                 break
             default:
                 break

@@ -17,8 +17,9 @@ describe('WorldGrid', () => {
 })
 
 describe('Robot', () => {
+  const worldGridMock = { m: 5, n: 3 } as WorldGrid
   test('Robot has a position (x, y), and an orientation (N, E, S, W).', () => {
-    const robot = new Robot(1, 1, 'E')
+    const robot = new Robot(1, 1, 'E', worldGridMock)
     expect(robot).toBeInstanceOf(Robot)
     expect(robot.x).toBe(1)
     expect(robot.y).toBe(1)
@@ -26,7 +27,7 @@ describe('Robot', () => {
   })
 
   test('Robot can move forward one space (F).', () => {
-    const robot = new Robot(1, 1, 'E')
+    const robot = new Robot(1, 1, 'E', worldGridMock)
     robot.moveForward()
     expect(robot.x).toBe(2)
     expect(robot.y).toBe(1)
@@ -34,10 +35,18 @@ describe('Robot', () => {
   })
 
   test('Robot can rotate left by 90 degrees (L).', () => {
-    const robot = new Robot(1, 1, 'E')
+    const robot = new Robot(1, 1, 'E', worldGridMock)
     robot.rotateLeft()
     expect(robot.x).toBe(1)
     expect(robot.y).toBe(1)
     expect(robot.orientation).toBe('N')
+  })
+
+  test('Robot can rotate right by 90 degrees (R).', () => {
+    const robot = new Robot(1, 1, 'E', worldGridMock)
+    robot.rotateRight()
+    expect(robot.x).toBe(1)
+    expect(robot.y).toBe(1)
+    expect(robot.orientation).toBe('S')
   })
 })
