@@ -1,2 +1,7 @@
-// eslint-disable-next-line no-console
-console.log('Hello world!');
+export class WorldGrid {
+    constructor(public m: number, public n: number) {
+        this.m = m
+        this.n = n
+    }
+}
+
