@@ -93,3 +93,28 @@ export class Robot {
     }
 }
 
+export class MarsMissionSimulator {
+    constructor(public robot: Robot) {
+        this.robot = robot
+    }
+
+    run(commands: string) {
+        for (let i = 0; i < commands.length; i++) {
+            const command = commands[i]
+            switch (command) {
+                case 'F':
+                    this.robot.moveForward()
+                    break
+                case 'L':
+                    this.robot.rotateLeft()
+                    break
+                case 'R':
+                    this.robot.rotateRight()
+                    break
+                default:
+                    break
+            }
+        }
+    }
+}
+

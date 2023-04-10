@@ -1,11 +1,4 @@
-// - Reads command line inputs, creates world grid, updates the robots, and prints out the final states of the robots.
-// - World is modelled as a grid with size m x n.
-// - Each robot has a position (x, y), and an orientation (N, E, S, W).
-// - Each robot can move forward one space (F), rotate left by 90 degrees (L), or rotate right by 90 degrees (R).
-// - If a robot moves off the grid, it is marked as ‘lost’ and its last valid grid position and orientation is recorded.
-// - (0, 0) represents the south-west corner of the grid.
-
-import { WorldGrid, Robot } from './index'
+import { WorldGrid, Robot, MarsMissionSimulator } from './index'
 
 describe('WorldGrid', () => {
   test('WorldGrid is modelled as a grid with size m x n.', () => {
@@ -17,9 +10,10 @@ describe('WorldGrid', () => {
 })
 
 describe('Robot', () => {
-  const worldGridMock = { m: 5, n: 3 } as WorldGrid
+  const worldGrid = new WorldGrid(5, 3)
+
   test('Robot has a position (x, y), and an orientation (N, E, S, W).', () => {
-    const robot = new Robot(1, 1, 'E', worldGridMock)
+    const robot = new Robot(1, 1, 'E', worldGrid)
     expect(robot).toBeInstanceOf(Robot)
     expect(robot.x).toBe(1)
     expect(robot.y).toBe(1)
@@ -27,7 +21,7 @@ describe('Robot', () => {
   })
 
   test('Robot can move forward one space (F).', () => {
-    const robot = new Robot(1, 1, 'E', worldGridMock)
+    const robot = new Robot(1, 1, 'E', worldGrid)
     robot.moveForward()
     expect(robot.x).toBe(2)
     expect(robot.y).toBe(1)
@@ -35,7 +29,7 @@ describe('Robot', () => {
   })
 
   test('Robot can rotate left by 90 degrees (L).', () => {
-    const robot = new Robot(1, 1, 'E', worldGridMock)
+    const robot = new Robot(1, 1, 'E', worldGrid)
     robot.rotateLeft()
     expect(robot.x).toBe(1)
     expect(robot.y).toBe(1)
@@ -43,7 +37,7 @@ describe('Robot', () => {
   })
 
   test('Robot can rotate right by 90 degrees (R).', () => {
-    const robot = new Robot(1, 1, 'E', worldGridMock)
+    const robot = new Robot(1, 1, 'E', worldGrid)
     robot.rotateRight()
     expect(robot.x).toBe(1)
     expect(robot.y).toBe(1)
@@ -51,7 +45,7 @@ describe('Robot', () => {
   })
 
   test('If a robot moves off the grid, it is marked as ‘lost’ and its last valid grid position and orientation is recorded.', () => {
-    const robot = new Robot(1, 1, 'E', worldGridMock)
+    const robot = new Robot(1, 1, 'E', worldGrid)
     robot.moveForward()
     robot.moveForward()
     robot.moveForward()
@@ -61,5 +55,17 @@ describe('Robot', () => {
     expect(robot.y).toBe(1)
     expect(robot.orientation).toBe('E')
     expect(robot.isLost).toBe(true)
+  })
+
+  describe('MarsMissionSimulator', () => {
+    const worldGrid = new WorldGrid(5, 3)
+
+    test('MarsMissionSimulator can take a string of instructions and execute them on a robot.', () => {
+      const robotSimulator = new MarsMissionSimulator(new Robot(1, 1, 'E', worldGrid))
+      robotSimulator.run('RFRFRFRF')
+      expect(robotSimulator.robot.x).toBe(1)
+      expect(robotSimulator.robot.y).toBe(1)
+      expect(robotSimulator.robot.orientation).toBe('E')
+    })
   })
 })
