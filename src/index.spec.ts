@@ -74,5 +74,12 @@ describe('Robot', () => {
       const status = robotSimulator.provideRobotStatusReport(robot)
       expect(status).toBe('{(1, 1, E)}')
     })
+
+    test('MarsMissionSimulator can provide a robots status if it is lost.', () => {
+      const robot = new Robot(3, 2, 'N', worldGrid)
+      robotSimulator.run(robot, 'FRRFLLFFRRFLL')
+      const status = robotSimulator.provideRobotStatusReport(robot)
+      expect(status).toBe('{(3, 3, N) LOST}')
+    })
   })
 })
