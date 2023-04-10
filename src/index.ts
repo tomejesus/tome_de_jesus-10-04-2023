@@ -7,11 +7,13 @@ export class WorldGrid {
 
 export class Robot {
     isLost: boolean
-    constructor(public x: number, public y: number, public orientation: string, public worldGrid: WorldGrid) {
+    commands: string
+    constructor(public x: number, public y: number, public orientation: string, public worldGrid: WorldGrid, commands: string) {
         this.x = x
         this.y = y
         this.orientation = orientation
         this.worldGrid = worldGrid
+        this.commands = commands
         this.isLost = false
     }
 
@@ -101,7 +103,7 @@ export class MarsMissionSimulator {
         this.robots = []
     }
 
-    run(robot: Robot, commands: string) {
+    processRobot(robot: Robot, commands: string) {
         for (let i = 0; i < commands.length; i++) {
             const command = commands[i]
             switch (command) {
@@ -129,10 +131,17 @@ export class MarsMissionSimulator {
         this.worldGrid = new WorldGrid(x, y)
     }
 
-    createRobot(x: number, y: number, orientation: string) {
+    createRobot(x: number, y: number, orientation: string, commands: string) {
         if (this.worldGrid) {
-            const robot = new Robot(x, y, orientation, this.worldGrid)
+            const robot = new Robot(x, y, orientation, this.worldGrid, commands)
             this.robots.push(robot)
         }
+    }
+
+    run() {
+        this.robots.forEach((robot) => {
+            this.processRobot(robot, 'FFRFF')
+            console.log(this.provideRobotStatusReport(robot))
+        })
     }
 }
