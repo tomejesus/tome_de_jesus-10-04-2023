@@ -59,13 +59,14 @@ describe('Robot', () => {
 
   describe('MarsMissionSimulator', () => {
     const worldGrid = new WorldGrid(5, 3)
+    const robotSimulator = new MarsMissionSimulator()
 
     test('MarsMissionSimulator can take a string of instructions and execute them on a robot.', () => {
-      const robotSimulator = new MarsMissionSimulator(new Robot(1, 1, 'E', worldGrid))
-      robotSimulator.run('RFRFRFRF')
-      expect(robotSimulator.robot.x).toBe(1)
-      expect(robotSimulator.robot.y).toBe(1)
-      expect(robotSimulator.robot.orientation).toBe('E')
+      const robot = new Robot(1, 1, 'E', worldGrid)
+      robotSimulator.run(robot, 'RFRFRFRF')
+      expect(robot.x).toBe(1)
+      expect(robot.y).toBe(1)
+      expect(robot.orientation).toBe('E')
     })
   })
 })

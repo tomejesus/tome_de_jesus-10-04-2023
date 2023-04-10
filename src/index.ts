@@ -94,22 +94,18 @@ export class Robot {
 }
 
 export class MarsMissionSimulator {
-    constructor(public robot: Robot) {
-        this.robot = robot
-    }
-
-    run(commands: string) {
+    run(robot: Robot, commands: string) {
         for (let i = 0; i < commands.length; i++) {
             const command = commands[i]
             switch (command) {
                 case 'F':
-                    this.robot.moveForward()
+                    robot.moveForward()
                     break
                 case 'L':
-                    this.robot.rotateLeft()
+                    robot.rotateLeft()
                     break
                 case 'R':
-                    this.robot.rotateRight()
+                    robot.rotateRight()
                     break
                 default:
                     break
